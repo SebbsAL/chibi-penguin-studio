@@ -17,9 +17,7 @@ export default defineConfig({
     ? {
         plugins: [
           nitro({
-            config: {
-              preset: "vercel",
-            },
+            preset: "vercel",
           }),
         ],
       }
