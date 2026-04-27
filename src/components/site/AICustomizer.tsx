@@ -6,19 +6,66 @@ import travelerImg from "@/assets/chibi-traveler.png";
 import cookieImg from "@/assets/chibi-cookie.png";
 import deskImg from "@/assets/chibi-desk.png";
 import quartetImg from "@/assets/chibi-quartet.png";
-import optionsCatalog from "@/assets/chibi-customizer-options.png";
+
+// Suits
+import suitOnyx from "@/assets/options/suit-onyx.png";
+import suitAstronauta from "@/assets/options/suit-astronauta.png";
+import suitCyberpunk from "@/assets/options/suit-cyberpunk.png";
+import suitChef from "@/assets/options/suit-chef.png";
+import suitMedieval from "@/assets/options/suit-medieval.png";
+import suitCielo from "@/assets/options/suit-cielo.png";
+
+// Accessories
+import accGalleta from "@/assets/options/acc-galleta.png";
+import accMochila from "@/assets/options/acc-mochila.png";
+import accAuriculares from "@/assets/options/acc-auriculares.png";
+import accDragon from "@/assets/options/acc-dragon.png";
+import accBufanda from "@/assets/options/acc-bufanda.png";
+import accClip from "@/assets/options/acc-clip.png";
+
+// Moods
+import moodFeliz from "@/assets/options/mood-feliz.png";
+import moodEnojado from "@/assets/options/mood-enojado.png";
+import moodSomnoliento from "@/assets/options/mood-somnoliento.png";
+import moodConfundido from "@/assets/options/mood-confundido.png";
+import moodFurioso from "@/assets/options/mood-furioso.png";
+
 import { Sparkles, Loader2 } from "lucide-react";
 
-const suits = ["Onyx Clásico", "Astronauta", "Cyberpunk", "Chef", "Medieval", "Cielo Azul"];
-const accs = ["Galleta", "Mochila", "Auriculares", "Mini Dragón", "Bufanda", "Clip Dorado"];
-const moods = ["Feliz", "Enojado", "Somnoliento", "Confundido", "Furioso"];
+type Option = { label: string; img: string };
+
+const suits: Option[] = [
+  { label: "Onyx Clásico", img: suitOnyx },
+  { label: "Astronauta", img: suitAstronauta },
+  { label: "Cyberpunk", img: suitCyberpunk },
+  { label: "Chef", img: suitChef },
+  { label: "Medieval", img: suitMedieval },
+  { label: "Cielo Azul", img: suitCielo },
+];
+
+const accs: Option[] = [
+  { label: "Galleta", img: accGalleta },
+  { label: "Mochila", img: accMochila },
+  { label: "Auriculares", img: accAuriculares },
+  { label: "Mini Dragón", img: accDragon },
+  { label: "Bufanda", img: accBufanda },
+  { label: "Clip Dorado", img: accClip },
+];
+
+const moods: Option[] = [
+  { label: "Feliz", img: moodFeliz },
+  { label: "Enojado", img: moodEnojado },
+  { label: "Somnoliento", img: moodSomnoliento },
+  { label: "Confundido", img: moodConfundido },
+  { label: "Furioso", img: moodFurioso },
+];
 
 const pool = [standardImg, happyImg, angryImg, travelerImg, cookieImg, deskImg, quartetImg];
 
 export function AICustomizer() {
-  const [suit, setSuit] = useState(suits[0]);
-  const [acc, setAcc] = useState(accs[0]);
-  const [mood, setMood] = useState(moods[0]);
+  const [suit, setSuit] = useState<Option>(suits[0]);
+  const [acc, setAcc] = useState<Option>(accs[0]);
+  const [mood, setMood] = useState<Option>(moods[0]);
   const [generating, setGenerating] = useState(false);
   const [result, setResult] = useState(standardImg);
   const [progress, setProgress] = useState(0);
@@ -52,42 +99,38 @@ export function AICustomizer() {
             Diseña tu <span className="text-gold italic font-light">Chibi único.</span>
           </h2>
           <p className="mt-5 text-white/60 text-lg">
-            Configura los parámetros y deja que nuestra red neuronal sintetice tu figura ideal.
+            Selecciona cada parámetro y observa la opción exacta antes de sintetizar tu figura.
           </p>
         </div>
 
-        {/* Catálogo visual de opciones disponibles */}
-        <div className="mb-12 lg:mb-16 rounded-[2rem] border border-white/10 bg-white/[0.03] p-3 lg:p-5 overflow-hidden">
-          <div className="flex items-center justify-between px-3 py-2 mb-3">
-            <div className="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-white/50">
-              <span className="size-1.5 rounded-full bg-gold" /> Catálogo · Personalizaciones disponibles
-            </div>
-            <span className="hidden sm:inline text-[10px] font-bold tracking-[0.2em] uppercase text-white/30">
-              Trajes · Accesorios · Expresiones
-            </span>
-          </div>
-          <img
-            src={optionsCatalog}
-            alt="Catálogo visual con todas las opciones de personalización: colores de traje, accesorios distintivos y expresiones disponibles para tu Chibi-Penguin"
-            className="w-full h-auto rounded-[1.4rem] block"
-            loading="lazy"
-          />
-        </div>
-
         <div className="grid lg:grid-cols-12 gap-8 items-stretch">
-          {/* Viewport */}
-          <div className="lg:col-span-7 relative rounded-[2.5rem] bg-white/5 border border-white/10 p-8 lg:p-12 overflow-hidden">
+          {/* Viewport — Resumen visual de la selección actual */}
+          <div className="lg:col-span-7 relative rounded-[2.5rem] bg-white/5 border border-white/10 p-8 lg:p-10 overflow-hidden">
             <div className="absolute top-6 left-6 pill-chip bg-gold text-obsidian z-10">
-              Concepto Generado por IA
+              Tu Selección Actual
             </div>
             <div className="absolute top-6 right-6 flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-white/50 z-10">
               <span className="size-1.5 rounded-full bg-sky animate-pulse-soft" /> Synth-V2
             </div>
 
-            <div className="aspect-square max-w-md mx-auto relative">
-              <div className="absolute inset-0 rounded-[2rem] border-2 border-dashed border-white/15 animate-spin-slow" />
-              <div className="absolute inset-6 rounded-[1.6rem] border border-white/10" />
-              <div className="absolute inset-10 rounded-[1.2rem] bg-white/5 overflow-hidden flex items-center justify-center">
+            {/* Trio de previews por categoría */}
+            <div className="mt-12 grid grid-cols-3 gap-3 lg:gap-5">
+              <PreviewCard caption="Traje" option={suit} accent="gold" />
+              <PreviewCard caption="Accesorio" option={acc} accent="sky" />
+              <PreviewCard caption="Expresión" option={mood} accent="gold" />
+            </div>
+
+            {/* Concepto generado por IA */}
+            <div className="mt-8 rounded-[1.6rem] border border-white/10 bg-white/[0.03] p-5">
+              <div className="flex items-center justify-between mb-4">
+                <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-white/50">
+                  Concepto generado · IA
+                </div>
+                <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-gold tabular-nums">
+                  {Math.round(progress)}%
+                </div>
+              </div>
+              <div className="aspect-[16/9] rounded-[1.2rem] bg-white/5 overflow-hidden flex items-center justify-center border border-white/10">
                 {generating ? (
                   <div className="flex flex-col items-center gap-4 text-white/70">
                     <Loader2 className="size-10 animate-spin text-gold" />
@@ -97,14 +140,7 @@ export function AICustomizer() {
                   <img key={result} src={result} alt="Chibi generado" className="w-full h-full object-cover" />
                 )}
               </div>
-            </div>
-
-            <div className="mt-8 space-y-3">
-              <div className="flex items-center justify-between text-[10px] font-bold tracking-[0.2em] uppercase text-white/50">
-                <span>Síntesis Neuronal</span>
-                <span className="text-gold tabular-nums">{Math.round(progress)}%</span>
-              </div>
-              <div className="h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
+              <div className="mt-4 h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
                 <div
                   className="h-full bg-gradient-to-r from-sky to-gold transition-all duration-100"
                   style={{ width: `${progress}%` }}
@@ -139,6 +175,40 @@ export function AICustomizer() {
   );
 }
 
+function PreviewCard({
+  caption,
+  option,
+  accent,
+}: {
+  caption: string;
+  option: Option;
+  accent: "gold" | "sky";
+}) {
+  const ring = accent === "gold" ? "ring-gold/60" : "ring-sky/60";
+  const dot = accent === "gold" ? "bg-gold" : "bg-sky";
+  return (
+    <div className={`relative rounded-[1.4rem] border border-white/10 bg-black/40 overflow-hidden ring-1 ${ring}`}>
+      <div className="aspect-[3/4] overflow-hidden bg-white/[0.02]">
+        <img
+          key={option.img}
+          src={option.img}
+          alt={`${caption}: ${option.label}`}
+          className="w-full h-full object-cover animate-in fade-in zoom-in-95 duration-300"
+        />
+      </div>
+      <div className="px-3 py-2.5 border-t border-white/10 flex items-center gap-2">
+        <span className={`size-1.5 rounded-full ${dot}`} />
+        <div className="min-w-0">
+          <div className="text-[9px] font-bold tracking-[0.22em] uppercase text-white/40 leading-none">
+            {caption}
+          </div>
+          <div className="text-xs font-bold text-white truncate mt-1">{option.label}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Field({
   label,
   value,
@@ -146,9 +216,9 @@ function Field({
   onChange,
 }: {
   label: string;
-  value: string;
-  options: string[];
-  onChange: (v: string) => void;
+  value: Option;
+  options: Option[];
+  onChange: (v: Option) => void;
 }) {
   return (
     <div className="mb-6">
@@ -158,15 +228,15 @@ function Field({
       <div className="flex flex-wrap gap-2">
         {options.map((o) => (
           <button
-            key={o}
+            key={o.label}
             onClick={() => onChange(o)}
             className={`px-4 h-10 rounded-full text-xs font-bold tracking-wide border transition-all ${
-              value === o
+              value.label === o.label
                 ? "bg-gold text-obsidian border-gold"
                 : "bg-transparent text-white/70 border-white/15 hover:border-white/40"
             }`}
           >
-            {o}
+            {o.label}
           </button>
         ))}
       </div>
