@@ -6,6 +6,7 @@ import travelerImg from "@/assets/chibi-traveler.png";
 import cookieImg from "@/assets/chibi-cookie.png";
 import deskImg from "@/assets/chibi-desk.png";
 import quartetImg from "@/assets/chibi-quartet.png";
+import optionsCatalog from "@/assets/chibi-customizer-options.png";
 import { Sparkles, Loader2 } from "lucide-react";
 
 const suits = ["Onyx Clásico", "Astronauta", "Cyberpunk", "Chef", "Medieval", "Cielo Azul"];
@@ -53,6 +54,24 @@ export function AICustomizer() {
           <p className="mt-5 text-white/60 text-lg">
             Configura los parámetros y deja que nuestra red neuronal sintetice tu figura ideal.
           </p>
+        </div>
+
+        {/* Catálogo visual de opciones disponibles */}
+        <div className="mb-12 lg:mb-16 rounded-[2rem] border border-white/10 bg-white/[0.03] p-3 lg:p-5 overflow-hidden">
+          <div className="flex items-center justify-between px-3 py-2 mb-3">
+            <div className="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-white/50">
+              <span className="size-1.5 rounded-full bg-gold" /> Catálogo · Personalizaciones disponibles
+            </div>
+            <span className="hidden sm:inline text-[10px] font-bold tracking-[0.2em] uppercase text-white/30">
+              Trajes · Accesorios · Expresiones
+            </span>
+          </div>
+          <img
+            src={optionsCatalog}
+            alt="Catálogo visual con todas las opciones de personalización: colores de traje, accesorios distintivos y expresiones disponibles para tu Chibi-Penguin"
+            className="w-full h-auto rounded-[1.4rem] block"
+            loading="lazy"
+          />
         </div>
 
         <div className="grid lg:grid-cols-12 gap-8 items-stretch">
