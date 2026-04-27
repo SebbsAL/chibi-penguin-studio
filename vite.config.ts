@@ -5,5 +5,21 @@
 //     error logger plugins, and sandbox detection (port/host/strictPort).
 // You can pass additional config via defineConfig({ vite: { ... } }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+import { nitro } from "nitro/vite";
 
-export default defineConfig();
+// Detect Vercel build environment. On Vercel, swap the Cloudflare worker output
+// for Nitro's Vercel preset so the app deploys as a Vercel Function with SSR.
+// Locally and on Lovable, the default Cloudflare target is preserved.
+const isVercel = !!process.env.VERCEL;
+
+export default defineConfig({
+  vite: isVercel
+    ? {
+        plugins: [
+          nitro({
+            preset: "vercel",
+          }),
+        ],
+      }
+    : undefined,
+});
